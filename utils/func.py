@@ -44,51 +44,6 @@ def model_load(
     model.to(device)
 
 
-def train(
-        model: torch.nn.Module,
-        n_epoch: int,
-        train_loader,
-        val,
-        lr: float = 0.001,
-        weight_decay: float = 1e-4):
-    print("Parameters count: ", sum(p.numel() for p in model.parameters() if p.requires_grad))
-
-    # Set up loss
-    criterion = torch.nn.MSELoss()
-
-    # Define Optimizer
-    optimizer = torch.optim.Adam(model.parameters(),
-                                 weight_decay=weight_decay,
-                                 lr=lr)
-
-    # Set up list to store the losses
-    train_loss = [np.inf]
-    val_loss = [np.inf]
-    # Start training
-    with trange(n_epoch) as t:
-        for epoch in t:
-            t.set_description(f"epoch: {epoch}")
-            for x, y in train_loader:
-                model.train()
-                optimizer.zero_grad()
-                y_pred = model(x)
-                
-                loss = loss_wight[0] * criterion(y_pred, y) + loss_wight[1] * model.loss()
-                loss.backward()
-                optimizer.step()
-            train_loss.append(loss.item())
-            if epoch % 20 == 0:
-                with torch.no_grad():
-                    model.eval()
-                    y_pred = model(val[0])
-                    vloss = criterion(y_pred, val[1])
-            val_loss.append(vloss.item())
-            t.set_postfix_str(
-                f'Training loss: {train_loss[-1]:0.4f} | Validation loss: {val_loss[-1]:0.4f}'
-            )
-    
-    return train_loss, val_loss
-
 def test_loss(
         model,
     ):

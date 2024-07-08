@@ -1,19 +1,15 @@
-
-import argparse
-
 import torch
 from tqdm import trange
 from model.ResKANet import ResKAN, ResCN, ResMLPN, ResFCN
 from model.TCN import TCNModel
 from model.CNN import CNNModel
-from utils.plot import plot_loss, plot_result
-from utils.results import calc_r2_pcc
+from utils.plot import plot_loss
 from dataset.util import make_dataset
 from model import *
 from model.ResNet import ResNet, BasicBlock
 import numpy as np
 from config import lr, weight_decay, batch_size, n_wells, epochs, loss_wight
-from utils.func import model_load, model_save, seed4everything, test_loss, train
+from utils.func import model_save, seed4everything
 # from utils.plot import plot_loss, plot_result
 
 
@@ -69,9 +65,6 @@ def train(model_type: str):
             val_loss.append(vloss.item())
     
     plot_loss(train_loss, val_loss, names=['Training', 'Validation'], title=net_model.name, loss_type='MSE', save=True)
-    plot_result(net_model)
-    print("Test MSE loss: ", test_loss(net_model))
-    print("r-squared and PCC: ", calc_r2_pcc(net_model))
     model_save(net_model)
 
 

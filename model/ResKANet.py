@@ -59,7 +59,7 @@ class ResKAN(nn.Module):
 
     def __init__(self, res_layers, kan_layers, *,
                 grid_size: int = 5,
-                kernel_size: int = 7,
+                kernel_size: int = 5,
                 device: str = 'cuda') -> None:
         super(ResKAN, self).__init__()
 
