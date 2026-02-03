@@ -23,7 +23,7 @@ from reskan.models.reskan import ResKANLoss  # noqa: E402
 def parse_args():
     p = argparse.ArgumentParser(description="Train a model (CNN/TCN/RNN/RKAN-18/ResKAN)")
     p.add_argument("--model", type=str, required=True, choices=["CNN", "TCN", "RNN", "RKAN-18", "ResKAN"])
-    p.add_argument("--dataset", type=float, default=0, choices=[0, 1, 2], help="0=Marmousi2, 1=Overthrust, 2=Overthrust (interpolated traces)"")
+    p.add_argument("--dataset", type=float, default=0, choices=[0, 1, 2], help="0=Marmousi2, 1=Overthrust, 2=Overthrust (interpolated traces)")
     p.add_argument("--phase", type=int, default=0)
     p.add_argument("--freq", type=int, default=30)
     p.add_argument("--epochs", type=int, default=1000)
